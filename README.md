@@ -17,5 +17,5 @@ pip install -r ./environment/requirements.txt
 **To run:**
 
 ```bash
-python ./main.py
+streamlit run ./main.py
 ```
