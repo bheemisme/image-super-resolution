@@ -1,9 +1,9 @@
 import streamlit as st
-from src.pages import dcgan, esrgan
+from src.pages import esrgan, srgan
 
 # A dictionary to map page names to their respective modules
 PAGES = {
-    "dcgan": dcgan,
+    "srgan": srgan,
     "esrgan": esrgan,
 }
 

@@ -10,10 +10,11 @@ htmlcov
 **/*.webp
 **/*.svg
 **/*.mp4
+**/*.jpeg
+**/*.pth
 
 /model/input_images
 /model/output_images
-
 
 **/__pycache__
 
