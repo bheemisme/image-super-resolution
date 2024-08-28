@@ -1,17 +1,18 @@
 import subprocess
-import tempfile
 from typing import List
 from pathlib import Path
 
-def model(input_files: List[tempfile._TemporaryFileWrapper]) -> List[tempfile._TemporaryFileWrapper]:
-    output_files = []
-    output_dir = 'model/output_images'
-    model_path = "model/realesrgan-ncnn-vulkan-20220424-windows/realesrgan-ncnn-vulkan.exe"
+def model(input_files: List[Path]) -> List[Path]:
+    output_files: List[Path] = []
+    output_dir = Path('temp')
+    model_path = Path("model/realesrgan-ncnn-vulkan-20220424-windows/realesrgan-ncnn-vulkan.exe")
     for input_file in input_files:
-        with tempfile.NamedTemporaryFile(dir=output_dir, delete=False) as output:
-            command = [model_path, "-i", input_file.name, "-o",
-                       output.name + ".png", "-n", "realesrgan-x4plus"]
-            subprocess.run(command, capture_output=True, text=True)
-            output_files.append(output)
+        output_file = output_dir / f"sr-{input_file.name}"
+        output_file.touch()
+        command = [str(model_path.absolute()), "-i", str(input_file.absolute()), "-o",
+                       str(output_file.absolute()), "-n", "realesrgan-x4plus"]
+        subprocess.run(command, capture_output=True, text=True)
+        output_files.append(output_file)
+    
 
     return output_files

@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from model.srgan import model
+from model.srgan_cal import model
 from src.components.uploader import uploader
 
 
