@@ -1,8 +1,14 @@
+# Team Members:
+# Sudarshan
+# Tinu Anand
+# Rohitt
+
 from typing import List
 import streamlit as st
 from PIL import Image
 from pathlib import Path
 
+# component for uploading the images
 def uploader(model):
 
     input_images_dir = Path("temp")
@@ -12,8 +18,6 @@ def uploader(model):
     # Display details and content of uploaded files
     if uploaded_files:
         input_files: List[Path] = []
-
-
 
         for uploaded_file in uploaded_files:
             if uploaded_file.type == "image/jpeg" or uploaded_file.type == "image/png":
@@ -26,6 +30,7 @@ def uploader(model):
         col1, col2 = st.columns(2)
 
         for i, o in zip(input_files, output_files):
+            
             with col1:
                 image = Image.open(i)
                 st.image(image=image, caption="Input", use_column_width=True)
@@ -33,14 +38,3 @@ def uploader(model):
             with col2:
                 image = Image.open(o)
                 st.image(image=image, caption="Output", use_column_width=True)
-
-            @st.fragment
-            def download():
-                with open(o, "rb") as file:
-                    
-                    btn = st.download_button(
-                        label="Download image",
-                        data=file,
-                        mime="image/png",
-                    )
-            download()

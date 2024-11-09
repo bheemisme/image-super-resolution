@@ -1,8 +1,23 @@
+# Team Members:
+# Sudarshan
+# Tinu Anand
+# Rohitt
+
 import math
 import torch
 from torch import nn
 
+# generator Model
+# This model takes an image as input (3 channels) and 
+# upscales it to a higher resolution image (also 3 channels)
+# using a series of convolutional layers.
+# It starts with a convolutional layer followed by a PReLU activation.
+# Then, it uses six ResidualBlocks with 64 channels each.
 
+# Another convolutional layer and BatchNorm are applied.
+# The final part uses several UpsampleBlocks (likely containing typos) to 
+# achieve the desired upscaling factor. These blocks likely use a combination 
+# of convolution and pixel shuffling to increase the image resolution.
 class Generator(nn.Module):
     def __init__(self, scale_factor):
         upsample_block_num = int(math.log(scale_factor, 2))
@@ -38,6 +53,9 @@ class Generator(nn.Module):
         return (torch.tanh(block8) + 1) / 2
 
 
+# discriminator model
+# This model takes an image as input (3 channels) and outputs
+#  a probability of the image being real (between 0 and 1).
 class Discriminator(nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
@@ -83,7 +101,7 @@ class Discriminator(nn.Module):
         batch_size = x.size(0)
         return torch.sigmoid(self.net(x).view(batch_size))
 
-
+# residual block for avoiding exploding or vanishing gradients
 class ResidualBlock(nn.Module):
     def __init__(self, channels):
         super(ResidualBlock, self).__init__()
@@ -102,7 +120,10 @@ class ResidualBlock(nn.Module):
 
         return x + residual
 
-
+# upsample block
+# This block is used for upscaling the feature maps in the Generator.
+# It takes an input with a specific number of channels and 
+# increases the number of channels by the square of the upscaling factor.
 class UpsampleBLock(nn.Module):
     def __init__(self, in_channels, up_scale):
         super(UpsampleBLock, self).__init__()
